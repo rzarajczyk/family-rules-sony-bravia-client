@@ -1,0 +1,1 @@
+# Sony KD-49XH8505 status reporter for Family Rules
