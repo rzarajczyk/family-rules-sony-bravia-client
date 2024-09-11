@@ -21,7 +21,7 @@ class SonyBraviaChecker:
 
         self.host = config['family-rules-server']['host']
         self.user = config['family-rules-server']['user']
-        self.instanceName = config['family-rules-server']['instance-name']
+        self.instance_id = config['family-rules-server']['instance-id']
         self.token = config['family-rules-server']['token']
 
     def run(self):
@@ -55,7 +55,7 @@ class SonyBraviaChecker:
 
     def report(self, usage):
         request = {
-            "instanceName": self.instanceName,
+            "instanceId": self.instance_id,
             'screenTime': usage.screen_time.total_seconds(),
             'applications': {app: time.total_seconds() for app, time in usage.applications.items()}
         }
