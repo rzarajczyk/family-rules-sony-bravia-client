@@ -15,6 +15,7 @@ class SonyBraviaChecker:
     def __init__(self, config):
         self.logger = logging.getLogger('SonyBravia')
         self.tv_name = config['tv']['name']
+        self.ip = config['tv']['ip']
         self.db = UptimeDb(Path(os.getenv('STORAGE', '/app/data')))
         self.interval = timedelta(seconds=config['interval-seconds'])
 
@@ -39,6 +40,7 @@ class SonyBraviaChecker:
     def get_now_playing(self):
         chromecasts, browser = pychromecast.get_listed_chromecasts(
             friendly_names=[self.tv_name],
+            known_hosts=[self.ip],
             discovery_timeout=10
         )
         cast = chromecasts[0]
@@ -46,7 +48,7 @@ class SonyBraviaChecker:
 
         turned_on = not cast.status.is_stand_by
         app = cast.status.display_name
-        print(cast.status)
+        logging.info(cast.status)
 
         browser.stop_discovery()
         return turned_on, app
