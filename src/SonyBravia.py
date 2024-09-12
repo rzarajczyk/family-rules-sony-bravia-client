@@ -25,17 +25,20 @@ class SonyBraviaChecker:
         self.token = config['family-rules-server']['token']
 
     def run(self):
-        turned_on, app = self.get_now_playing()
+        try:
+            turned_on, app = self.get_now_playing()
 
-        if turned_on:
-            update = UsageUpdate(
-                screen_time=self.interval,
-                applications={app: self.interval} if app is not None else {},
-                absolute=False
-            )
-            usage = self.db.update(update)
+            if turned_on:
+                update = UsageUpdate(
+                    screen_time=self.interval,
+                    applications={app: self.interval} if app is not None else {},
+                    absolute=False
+                )
+                usage = self.db.update(update)
 
-            self.report(usage)
+                self.report(usage)
+        except Exception as e:
+            logging.error("Error occured", e)
 
     def get_now_playing(self):
         chromecasts, browser = pychromecast.get_listed_chromecasts(
