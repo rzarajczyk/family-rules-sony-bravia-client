@@ -49,7 +49,7 @@ class SonyBraviaChecker:
         cast = chromecasts[0]
         cast.wait()
 
-        turned_on = not cast.status.is_stand_by
+        turned_on = cast.status.display_name is not None
         app = cast.status.display_name
         logging.info(cast.status)
 
