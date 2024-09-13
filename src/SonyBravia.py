@@ -26,6 +26,7 @@ class SonyBraviaChecker:
 
         requests.post(
             url=f"{self.host}/api/v1/launch",
+            headers={'Content-Type': 'application/json'},
             json={
                 "instanceId": self.instance_id,
                 "version": "v1",
