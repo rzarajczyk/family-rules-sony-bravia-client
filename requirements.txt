@@ -1,4 +1,4 @@
 pyyaml~=6.0
-APScheduler==3.10.1
 pychromecast==14.0.1
 service-bootstrap~=0.0.5
+bravia-tv~=1.0.11
