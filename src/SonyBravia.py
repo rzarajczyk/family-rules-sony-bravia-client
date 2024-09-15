@@ -84,12 +84,17 @@ class SonyBraviaChecker:
         if turned_on:
 
             cast = pychromecast.get_chromecast_from_host(
-                host=(self.ip, None, self.id, self.id, self.id)
+                host=(self.ip, None, self.id, self.id, self.id),
+                tries=1,
+                retry_wait=0,
+                timeout=5.0
             )
-            cast.wait()
-
-            app = cast.status.display_name
-            logging.info(cast.status)
+            try:
+                cast.wait(timeout=5.0)
+                app = cast.status.display_name
+                logging.info(cast.status)
+            finally:
+                cast.disconnect(timeout=5.0)
         return turned_on, app
 
     def handle_state(self, state):
