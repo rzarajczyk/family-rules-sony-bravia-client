@@ -1,1 +1,2 @@
-# Sony KD-49XH8505 status reporter for Family Rules
+# Docs:
+See [https://rzarajczyk.github.io/projects-family-rules/](https://rzarajczyk.github.io/projects-family-rules/)
