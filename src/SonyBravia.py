@@ -29,11 +29,10 @@ class SonyBraviaChecker:
         self.token = config['family-rules-server']['token']
 
         requests.post(
-            url=f"{self.host}/api/v1/launch",
+            url=f"{self.host}/api/v2/launch",
             headers={'Content-Type': 'application/json'},
             json={
-                "instanceId": self.instance_id,
-                "version": "v2",
+                "version": "3.0",
                 "availableStates": [
                     {
                         "deviceState": "ACTIVE",
@@ -49,7 +48,7 @@ class SonyBraviaChecker:
                     }
                 ]
             },
-            auth=HTTPBasicAuth(self.user, self.token)
+            auth=HTTPBasicAuth(self.instance_id, self.token)
         ).raise_for_status()
 
     def run(self):
@@ -110,14 +109,13 @@ class SonyBraviaChecker:
         }
         if usage is not None:
             request = {
-                "instanceId": self.instance_id,
                 'screenTime': usage.screen_time.total_seconds(),
                 'applications': {app: time.total_seconds() for app, time in usage.applications.items()}
             }
         response = requests.post(
-            url=f"{self.host}/api/v1/report",
+            url=f"{self.host}/api/v2/report",
             json=request,
-            auth=HTTPBasicAuth(self.user, self.token)
+            auth=HTTPBasicAuth(self.instance_id, self.token)
         )
         response.raise_for_status()
         return response.json()['deviceState']
